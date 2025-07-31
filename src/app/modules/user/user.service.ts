@@ -74,6 +74,7 @@ const updateUser = async (
 
 const getAllUsers = async (query: Record<string, string>) => {
   const queryBuilder = new QueryBuilder(User.find(), query);
+
   const usersData = queryBuilder
     .filter()
     .search(userSearchableFields)
