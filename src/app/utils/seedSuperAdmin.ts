@@ -21,7 +21,7 @@ export const seedSuperAdmin = async () => {
       Number(envVars.BCRYPT_SALT_ROUND)
     );
 
-    const payload: IUser = {
+    const payload: Partial<IUser> = {
       name: "Admin",
       email: envVars.ADMIN_EMAIL,
       password: hashedPassword,

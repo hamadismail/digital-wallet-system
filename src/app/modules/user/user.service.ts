@@ -5,30 +5,44 @@ import { envVars } from "../../config/env";
 import AppError from "../../errorHelpers/AppError";
 import { QueryBuilder } from "../../utils/QueryBuilder";
 import { userSearchableFields } from "./user.constant";
-import {  IUser, Role, Status } from "./user.interface";
+import { IUser, Role, Status } from "./user.interface";
 import { User } from "./user.model";
+import { Wallet } from "../wallet/wallet.model";
+import { startSession } from "mongoose";
 
 const createUser = async (payload: Partial<IUser>) => {
   const { email, password, ...rest } = payload;
-
   const isUserExist = await User.findOne({ email });
 
-  if (isUserExist) {
-    throw new AppError(httpStatus.BAD_REQUEST, "User Already Exist");
+  const session = await startSession();
+  session.startTransaction();
+
+  try {
+    if (isUserExist) {
+      throw new AppError(httpStatus.BAD_REQUEST, "User Already Exist");
+    }
+
+    const hashedPassword = await bcryptjs.hash(
+      password as string,
+      Number(envVars.BCRYPT_SALT_ROUND)
+    );
+
+    const user = await User.create(
+      [{ email, password: hashedPassword, ...rest }],
+      { session }
+    );
+
+    await Wallet.create([{ user: user[0]._id, balance: 50 }], { session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return user[0];
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    throw error;
   }
-
-  const hashedPassword = await bcryptjs.hash(
-    password as string,
-    Number(envVars.BCRYPT_SALT_ROUND)
-  );
-
-  const user = await User.create({
-    email,
-    password: hashedPassword,
-    ...rest,
-  });
-
-  return user;
 };
 
 const updateUser = async (
