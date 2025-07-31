@@ -1,12 +1,12 @@
 import bcryptjs from "bcryptjs";
 import { envVars } from "../config/env";
-import { IAuthProvider, IUser, Role } from "../modules/user/user.interface";
 import { User } from "../modules/user/user.model";
+import { IUser, Role, Status } from "../modules/user/user.interface";
 
 export const seedSuperAdmin = async () => {
   try {
     const isSuperAdminExist = await User.findOne({
-      email: envVars.SUPER_ADMIN_EMAIL,
+      email: envVars.ADMIN_EMAIL,
     });
 
     if (isSuperAdminExist) {
@@ -17,22 +17,17 @@ export const seedSuperAdmin = async () => {
     console.log("Trying to create Admin...");
 
     const hashedPassword = await bcryptjs.hash(
-      envVars.SUPER_ADMIN_PASSWORD,
+      envVars.ADMIN_PASSWORD,
       Number(envVars.BCRYPT_SALT_ROUND)
     );
 
-    const authProvider: IAuthProvider = {
-      provider: "credentials",
-      providerId: envVars.SUPER_ADMIN_EMAIL,
-    };
-
     const payload: IUser = {
-      name: "Super admin",
-      email: envVars.SUPER_ADMIN_EMAIL,
+      name: "Admin",
+      email: envVars.ADMIN_EMAIL,
       password: hashedPassword,
-      role: Role.SUPER_ADMIN,
-      status: { type: String, enum: ["active", "blocked"], default: "active" },
-      approved: { type: Boolean, default: false }, // for agents
+      role: Role.ADMIN,
+      status: Status.ACTIVE,
+      approved: true,
     };
 
     await User.create(payload);
