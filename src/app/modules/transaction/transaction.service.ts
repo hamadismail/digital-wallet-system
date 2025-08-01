@@ -14,7 +14,7 @@ const addMoney = async (amount: number, decodedToken: JwtPayload) => {
   // }
 
   // Check if user exists
-  const userWallet = await Wallet.findOne({ user: decodedToken.userId });
+  const userWallet = await Wallet.findOne({ userId: decodedToken.userId });
   if (!userWallet) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found");
   }
@@ -65,7 +65,8 @@ const withdrawMoney = async (amount: number, decodedToken: JwtPayload) => {
   // }
 
   // Check if user exists
-  const userWallet = await Wallet.findOne({ user: decodedToken.userId });
+  const userWallet = await Wallet.findOne({ userId: decodedToken.userId });
+
   if (!userWallet) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found");
   }
@@ -118,9 +119,9 @@ const sendMoney = async (
   decodedToken: JwtPayload
 ) => {
   // Check if user exists
-  const senderWallet = await Wallet.findOne({ user: decodedToken.userId });
+  const senderWallet = await Wallet.findOne({ userId: decodedToken.userId });
 
-  const receiverWallet = await Wallet.findOne({ user: userId });
+  const receiverWallet = await Wallet.findOne({ userId: userId });
 
   if (!receiverWallet || !senderWallet) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found");

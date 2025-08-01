@@ -1,0 +1,421 @@
+{
+	"info": {
+		"_postman_id": "f5f5954f-a22c-4409-9b59-abaa4542ce3e",
+		"name": "Wallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39283363"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhjYmE0MDk4MmMzY2UwODAyMGZkNzgiLCJlbWFpbCI6ImhhbWFkQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzU0MDUzOTM1LCJleHAiOjE3NTQwNTQyMzV9.yYld60aC92HaOWdbgtBnI9uEbpM3kL0wPNxixNZlnhA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://digital-wallet-api-indol.vercel.app/api/v1/user/all-users",
+							"protocol": "https",
+							"host": [
+								"digital-wallet-api-indol",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"all-users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"hamad\",\n    \"email\": \"hamad@gmail.com\",\n    \"password\": \"12345678A@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/user/register",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"hamad@gmail.com\",\n    \"password\": \"12345678A@\"\n    // \"email\": \"super@gmail.com\",\n    // \"password\": \"12345678\"\n    // \"email\": \"ismail@gmail.com\",\n    // \"password\": \"12345678A@\"\n    // \"email\": \"agent@gmail.com\",\n    // \"password\": \"12345678A@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Wallet",
+			"item": [
+				{
+					"name": "Add Money",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhjYmE0MDk4MmMzY2UwODAyMGZkNzgiLCJlbWFpbCI6ImhhbWFkQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzU0MDUzMjQ0LCJleHAiOjE3NTQwNTM1NDR9.m88dzAHgz7Zstey-xfwJ_IoA1lDhzxTrXyhbpZ22FuM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/user/add-money",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"add-money"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw Money",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhjYmE0MDk4MmMzY2UwODAyMGZkNzgiLCJlbWFpbCI6ImhhbWFkQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzU0MDUzMjQ0LCJleHAiOjE3NTQwNTM1NDR9.m88dzAHgz7Zstey-xfwJ_IoA1lDhzxTrXyhbpZ22FuM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 70\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/user/withdraw",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Money",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhjYmE0MDk4MmMzY2UwODAyMGZkNzgiLCJlbWFpbCI6ImhhbWFkQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzU0MDU0MjEyLCJleHAiOjE3NTQwNTQ1MTJ9.djNCX_WlWRhJkEfWD-p2p1qbR6RZTqEEa_LGgw2ot_k",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"688cbb20982c3ce08020fd88\",\n    \"amount\": 80\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/user/send",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transaction Summary",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhjYmE0MDk4MmMzY2UwODAyMGZkNzgiLCJlbWFpbCI6ImhhbWFkQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzU0MDUzNTY5LCJleHAiOjE3NTQwNTM4Njl9.TBBH0HSid86-IkBvmveW5ee7J7EGhwy-6OuvK9vxWiw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"receiverId\": \"688c7fcb6422de3425414bd9\",\n    \"amount\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/me/transaction-summary",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"me",
+								"transaction-summary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block Wallet",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhjYjVhZjhkM2ZmNTExM2U4YTdhOTAiLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDA1MzcxMCwiZXhwIjoxNzU0MDU0MDEwfQ.hTvP-AAwSsytwLE8AHk0ZxNHNXZ3Wk3LndWbEWTtuFw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"receiverId\": \"688c7fcb6422de3425414bd9\",\n    \"amount\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://digital-wallet-api-indol.vercel.app/api/v1/wallet/block/688cbb20982c3ce08020fd88",
+							"protocol": "https",
+							"host": [
+								"digital-wallet-api-indol",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallet",
+								"block",
+								"688cbb20982c3ce08020fd88"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agent",
+			"item": [
+				{
+					"name": "Make Agent",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhjYjVhZjhkM2ZmNTExM2U4YTdhOTAiLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDA1MzcxMCwiZXhwIjoxNzU0MDU0MDEwfQ.hTvP-AAwSsytwLE8AHk0ZxNHNXZ3Wk3LndWbEWTtuFw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"AGENT\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://digital-wallet-api-indol.vercel.app/api/v1/user/make-agent/688cbb20982c3ce08020fd88",
+							"protocol": "https",
+							"host": [
+								"digital-wallet-api-indol",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"make-agent",
+								"688cbb20982c3ce08020fd88"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CashIn",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhjYTkzNWZkODRjMDUxMWRkM2ZkNTAiLCJlbWFpbCI6ImhhbWFkQGdtYWlsLmNvbSIsInJvbGUiOiJBR0VOVCIsImlhdCI6MTc1NDA1MTM0MCwiZXhwIjoxNzU0MDUxNjQwfQ.PnN-r8O1AuIuMsKuDPYXGroxIgPFuV3i3-2E0MUQVzg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"688c7fcb6422de3425414bd9\",\n    \"amount\": 80\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://digital-wallet-api-indol.vercel.app/api/v1/agent/cash-in",
+							"protocol": "https",
+							"host": [
+								"digital-wallet-api-indol",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agent",
+								"cash-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CashOut",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhjOWUyY2RiNDlmOWE5MDEyMTk4MGUiLCJlbWFpbCI6ImFnZW50QGdtYWlsLmNvbSIsInJvbGUiOiJBR0VOVCIsImlhdCI6MTc1NDA0NzE0NSwiZXhwIjoxNzU0MDQ3NDQ1fQ.Z_nHWhAwNBsLLilVeJBI42rncTkxWyTcRMQEkVmiSWc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"688c7fcb6422de3425414bd9\",\n    \"amount\": 80\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://digital-wallet-api-indol.vercel.app/api/v1/agent/cash-out",
+							"protocol": "https",
+							"host": [
+								"digital-wallet-api-indol",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agent",
+								"cash-out"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:5000",
+			"type": "default"
+		}
+	]
+}
