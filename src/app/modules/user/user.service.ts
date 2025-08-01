@@ -50,7 +50,7 @@ const updateUser = async (
   payload: Partial<IUser>,
   decodedToken: JwtPayload
 ) => {
-  if (decodedToken.role === Role.USER || decodedToken.role === Role.GUIDE) {
+  if (decodedToken.role === Role.USER || decodedToken.role === Role.AGENT) {
     if (userId !== decodedToken.userId) {
       throw new AppError(401, "You are not authorized");
     }
@@ -63,7 +63,7 @@ const updateUser = async (
   }
 
   if (payload.role) {
-    if (decodedToken.role === Role.USER || decodedToken.role === Role.GUIDE) {
+    if (decodedToken.role === Role.USER || decodedToken.role === Role.AGENT) {
       throw new AppError(httpStatus.FORBIDDEN, "You are not authorized");
     }
   }
@@ -73,7 +73,7 @@ const updateUser = async (
     payload.status === Status.BLOCKED ||
     payload.status === Status.INACTIVE
   ) {
-    if (decodedToken.role === Role.USER || decodedToken.role === Role.GUIDE) {
+    if (decodedToken.role === Role.USER || decodedToken.role === Role.AGENT) {
       throw new AppError(httpStatus.FORBIDDEN, "You are not authorized");
     }
   }
