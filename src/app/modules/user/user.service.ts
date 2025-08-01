@@ -32,7 +32,17 @@ const createUser = async (payload: Partial<IUser>) => {
       { session }
     );
 
-    await Wallet.create([{ user: user[0]._id, balance: 50 }], { session });
+    await Wallet.create(
+      [
+        {
+          userId: user[0]._id,
+          name: user[0].name,
+          email: user[0].email,
+          balance: 50,
+        },
+      ],
+      { session }
+    );
 
     await session.commitTransaction();
     session.endSession();
@@ -114,9 +124,35 @@ const getSingleUser = async (id: string) => {
   };
 };
 
+const makeAgent = async (payload: Partial<IUser>, decodedToken: JwtPayload) => {
+  if (decodedToken.role === Role.USER || decodedToken.role === Role.AGENT) {
+    throw new AppError(401, "You are not authorized");
+  }
+
+  const ifUserExist = await User.findById(payload._id);
+
+  if (!ifUserExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    payload._id,
+    { role: payload.role },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  return {
+    data: user,
+  };
+};
+
 export const UserServices = {
   createUser,
   getAllUsers,
   getSingleUser,
   updateUser,
+  makeAgent,
 };

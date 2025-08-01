@@ -71,9 +71,30 @@ const getSingleUser = catchAsync(
   }
 );
 
+const makeAgent = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const verifiedToken = req.user;
+
+    const payload = req.body;
+
+    const user = await UserServices.makeAgent(
+      payload,
+      verifiedToken as JwtPayload
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "User Updated Successfully",
+      data: user,
+    });
+  }
+);
+
 export const UserControllers = {
   createUser,
   getAllUsers,
   getSingleUser,
   updateUser,
+  makeAgent
 };

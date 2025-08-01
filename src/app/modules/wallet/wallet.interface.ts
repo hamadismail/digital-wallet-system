@@ -6,7 +6,9 @@ export enum WalletStatus {
 }
 
 export interface IWallet {
-  user: Types.ObjectId;
+  userId: Types.ObjectId;
+  name: string,
+  email: string,
   balance: number;
   status: WalletStatus
 }

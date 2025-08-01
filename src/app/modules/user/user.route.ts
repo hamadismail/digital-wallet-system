@@ -21,6 +21,12 @@ router.get(
   UserControllers.getAllUsers
 );
 
+router.patch(
+  "/user/make-agent",
+  checkAuth(Role.ADMIN),
+  UserControllers.makeAgent
+);
+
 router.get("/user/:id", checkAuth(Role.ADMIN), UserControllers.getSingleUser);
 
 router.patch(
@@ -29,11 +35,46 @@ router.patch(
   UserControllers.updateUser
 );
 
+////////////////////////////
 // User Wallet route
+///////////////////////////
+
 router.post(
   "/user/add-money",
   checkAuth(Role.USER),
   TransactionController.addMoney
 );
+
+router.post(
+  "/user/withdraw",
+  checkAuth(Role.USER),
+  TransactionController.withdrawMoney
+);
+
+router.post(
+  "/user/send",
+  checkAuth(Role.USER),
+  TransactionController.sendMoney
+);
+
+router.get(
+  "/me/transaction-summary",
+  checkAuth(Role.USER),
+  TransactionController.getTransactionSummary
+);
+
+// AGENTS WALLET
+router.post(
+  "/agent/cash-in",
+  checkAuth(Role.AGENT),
+  TransactionController.cashIN
+);
+
+router.post(
+  "/agent/cash-out",
+  checkAuth(Role.AGENT),
+  TransactionController.cashOUT
+);
+
 // /api/v1/user/:id
 export const UserRoutes = router;

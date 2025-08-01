@@ -7,8 +7,7 @@ import {
 
 const transactionSchema = new Schema<ITransaction>(
   {
-    from: { type: Schema.Types.ObjectId, ref: "User" },
-    to: { type: Schema.Types.ObjectId, ref: "User" },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
     amount: { type: Number },
     type: {
       type: String,

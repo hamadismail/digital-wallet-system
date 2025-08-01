@@ -14,8 +14,7 @@ export enum TransactionType {
 }
 
 export interface ITransaction {
-  from: Types.ObjectId;
-  to: Types.ObjectId;
+  userId: Types.ObjectId;
   amount: number;
   type: TransactionType;
   status: TransactionStatus;
