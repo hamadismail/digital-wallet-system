@@ -74,10 +74,11 @@ const getSingleUser = catchAsync(
 const makeAgent = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const verifiedToken = req.user;
-
+    const userId = req.params.id;
     const payload = req.body;
 
     const user = await UserServices.makeAgent(
+      userId,
       payload,
       verifiedToken as JwtPayload
     );
@@ -85,7 +86,26 @@ const makeAgent = catchAsync(
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.CREATED,
-      message: "User Updated Successfully",
+      message: "User Role Changed Successfully",
+      data: user,
+    });
+  }
+);
+
+const blockWallet = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const verifiedToken = req.user;
+    const userId = req.params.id;
+
+    const user = await UserServices.blockWallet(
+      userId,
+      verifiedToken as JwtPayload
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Wallet Blocked Successfully",
       data: user,
     });
   }
@@ -96,5 +116,6 @@ export const UserControllers = {
   getAllUsers,
   getSingleUser,
   updateUser,
-  makeAgent
+  makeAgent,
+  blockWallet,
 };

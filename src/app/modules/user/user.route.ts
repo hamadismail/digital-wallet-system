@@ -22,9 +22,15 @@ router.get(
 );
 
 router.patch(
-  "/user/make-agent",
+  "/user/make-agent/:id",
   checkAuth(Role.ADMIN),
   UserControllers.makeAgent
+);
+
+router.patch(
+  "/wallet/block/:id",
+  checkAuth(Role.ADMIN),
+  UserControllers.blockWallet
 );
 
 router.get("/user/:id", checkAuth(Role.ADMIN), UserControllers.getSingleUser);

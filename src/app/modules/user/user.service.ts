@@ -9,6 +9,7 @@ import { IUser, Role, Status } from "./user.interface";
 import { User } from "./user.model";
 import { Wallet } from "../wallet/wallet.model";
 import { startSession } from "mongoose";
+import { WalletStatus } from "../wallet/wallet.interface";
 
 const createUser = async (payload: Partial<IUser>) => {
   const { email, password, ...rest } = payload;
@@ -124,19 +125,23 @@ const getSingleUser = async (id: string) => {
   };
 };
 
-const makeAgent = async (payload: Partial<IUser>, decodedToken: JwtPayload) => {
+const makeAgent = async (
+  userId: string,
+  payload: Partial<IUser>,
+  decodedToken: JwtPayload
+) => {
   if (decodedToken.role === Role.USER || decodedToken.role === Role.AGENT) {
     throw new AppError(401, "You are not authorized");
   }
 
-  const ifUserExist = await User.findById(payload._id);
+  const ifUserExist = await User.findOne({ _id: userId });
 
   if (!ifUserExist) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found");
   }
 
-  const user = await User.findByIdAndUpdate(
-    payload._id,
+  const user = await User.findOneAndUpdate(
+    { _id: userId },
     { role: payload.role },
     {
       new: true,
@@ -144,9 +149,30 @@ const makeAgent = async (payload: Partial<IUser>, decodedToken: JwtPayload) => {
     }
   );
 
-  return {
-    data: user,
-  };
+  return user;
+};
+
+const blockWallet = async (userId: string, decodedToken: JwtPayload) => {
+  if (decodedToken.role === Role.USER || decodedToken.role === Role.AGENT) {
+    throw new AppError(401, "You are not authorized");
+  }
+
+  const ifUserExist = await User.find({ userId });
+
+  if (!ifUserExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  const user = await Wallet.findOneAndUpdate(
+    { userId },
+    { status: WalletStatus.BLOCKED },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  return user;
 };
 
 export const UserServices = {
@@ -155,4 +181,5 @@ export const UserServices = {
   getSingleUser,
   updateUser,
   makeAgent,
+  blockWallet,
 };
